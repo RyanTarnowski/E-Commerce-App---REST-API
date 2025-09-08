@@ -6,19 +6,13 @@ const port = 3000;
 //require('dotenv').config({ path: './config.env' });
 require('@dotenvx/dotenvx').config({ path: './config.env' });
 
-const db = require('./db/index');
-
-// Add middware for parsing request bodies:
+//Add middware for parsing request bodies:
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-app.get('/', async (req, res) => {
-  const result = await db.query('SELECT * FROM users;'); //db test
-  res.send(result.rows);
-});
-
-//app.post('/register', db.createUser);
-app.post('/register', db.createUserHashed);
+//Mount apiRouter:
+const apiRouter = require('./routes/api');
+app.use('/api', apiRouter);
 
 app.listen(port, () => {
   console.log(`E-Commerce app listening on port ${port}`);
