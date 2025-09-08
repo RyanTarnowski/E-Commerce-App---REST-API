@@ -9,10 +9,18 @@
 
 CREATE TABLE users (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  username VARCHAR(100),
+  username VARCHAR(100) UNIQUE,
   password VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE UNIQUE INDEX idx_lower_unique 
+   ON users (lower(username));
+   
+-- ALTER TABLE users
+--   ADD CONSTRAINT users_username_lowercase_ck
+--   CHECK (username = lower(username));
+
 
 CREATE TABLE orders (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
