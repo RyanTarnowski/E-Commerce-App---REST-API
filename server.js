@@ -1,17 +1,25 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const apiRouter = require('./routes/api');
 
 //Used for the config.env file setup and access
 //require('dotenv').config({ path: './config.env' });
 require('@dotenvx/dotenvx').config({ path: './config.env' });
 
-//Add middware for parsing request bodies:
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+app.use(session({
+    secret: process.env.SESSIONSECRET,
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      maxAge: 60000 * 60,  //1 hour
+    },
+  })
+);
 
-//Mount apiRouter:
-const apiRouter = require('./routes/api');
+app.use(bodyParser.json());
 app.use('/api', apiRouter);
 
 app.listen(port, () => {
