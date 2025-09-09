@@ -1,14 +1,32 @@
 const express = require('express');
 const userRouter =  express.Router();
 const db = require('../db/index');
+const passport = require('passport');
 
-userRouter.get('/', async (req, res) => {
-  const result = await db.query('SELECT * FROM users;'); //db test
-  res.send(result.rows);
+// userRouter.get('/', async (req, res) => {
+//   if (!req.user) return res.sendStatus(401);
+//   const result = await db.query('SELECT * FROM users;');
+//   res.status(200).send(result.rows);
+// });
+
+userRouter.post('/register', db.createUser);
+
+userRouter.post('/login', passport.authenticate('local'), (req, res) => {
+  res.sendStatus(200);
 });
 
-//userRouter.post('/register', db.createUser);
+userRouter.get('/status', (req, res) => {
+  console.log(req.session);
+  return req.user ? res.status(200).send(req.user) : res.sendStatus(401);
+});
 
-userRouter.post('/register', db.createUserHashed);
+userRouter.post('/logout', (req, res) => {
+  if (!req.user) return res.sendStatus(401);
+  
+  req.logout((err) => {
+    if (err) return res.sendStatus(400);
+    res.sendStatus(200);
+  })
+});
 
 module.exports = userRouter;
