@@ -3,6 +3,7 @@
 -- DROP TABLE user_cart;
 -- DROP TABLE order_detail;
 -- DROP TABLE products;
+-- DROP TABLE categories;
 -- DROP TABLE orders;
 -- DROP TABLE users;
 
@@ -29,10 +30,19 @@ CREATE TABLE orders (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE products (
+CREATE TABLE categories (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(100),
-  decsription VARCHAR(500),
+  description VARCHAR(500),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE products (
+  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  category_id INT NOT NULL REFERENCES categories (id),
+  name VARCHAR(100),
+  description VARCHAR(500),
   price money,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
