@@ -14,9 +14,9 @@ passport.deserializeUser(async (id, done) => {
         const result = await db.query("SELECT id, username FROM users WHERE id = $1", [ id ]);
         const dbuser = result.rows[0];
 
-        if (!dbuser) throw new Error('User not found');
+        if (!dbuser) return done(null, false, { message: 'User not found' }); //throw new Error('User not found');
 
-        done(null, dbuser);
+        return done(null, dbuser);
     } catch (err) {
         done(err, null);
     }
@@ -27,11 +27,11 @@ passport.use(new LocalStrategy(async (username, password, done) => {
         const result = await db.query("SELECT id, username, password, salt FROM users WHERE username = $1", [ username ]);
         const dbuser = result.rows[0];
 
-        if (!dbuser) throw new Error('User not found');
+        if (!dbuser) return done(null, false, { message: 'User not found' }); //throw new Error('User not found');
 
         crypto.pbkdf2(password, Buffer.from(dbuser.salt, "hex"), 310000, 32, 'sha256', function(err, hashedPassword) {
-            if (err) throw err; 
-            if (!crypto.timingSafeEqual(Buffer.from(dbuser.password, "hex"), hashedPassword)) throw new Error('Incorrect username or password'); 
+            if (err) done(err, null); //throw err; 
+            if (!crypto.timingSafeEqual(Buffer.from(dbuser.password, "hex"), hashedPassword)) return done(null, false, { message: 'Incorrect username or password' }); //throw new Error('Incorrect username or password'); 
             return done(null, dbuser);
         });
     } catch (err) {

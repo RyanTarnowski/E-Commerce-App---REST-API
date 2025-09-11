@@ -22,8 +22,6 @@ productRouter.get('/', async (req, res) => {
 productRouter.get('/:productId', async (req, res) => {
     const result = await db.query('SELECT * FROM products WHERE id = $1;', [ req.params.productId ]);
 
-    //console.log(result.rows[0]);
-
     if(result.rowCount > 0) {
         res.status(200).send(result.rows);
     } else {
