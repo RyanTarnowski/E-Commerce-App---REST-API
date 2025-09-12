@@ -57,7 +57,7 @@ CREATE TABLE order_detail (
 );
 
 CREATE TABLE user_cart (
-  user_id INT NOT NULL REFERENCES orders (id),
+  user_id INT NOT NULL REFERENCES users (id),
   product_id INT NOT NULL REFERENCES products (id),
   qty INT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

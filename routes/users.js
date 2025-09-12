@@ -41,7 +41,7 @@ userRouter.get('/:userId', checkUserStatus, async (req, res) => {
   if(result.rowCount > 0) {
       res.status(200).send(result.rows);
   } else {
-      res.status(404).send();
+      res.sendStatus(400);
   }
 });
 

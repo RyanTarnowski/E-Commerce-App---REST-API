@@ -49,8 +49,4 @@ const updateUserPW = (req, res) => {
     });
 }
 
-
-
-
-
 module.exports = {query, createUser, updateUserPW};
