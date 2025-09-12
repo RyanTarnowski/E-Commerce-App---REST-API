@@ -48,10 +48,11 @@ CREATE TABLE products (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE order_detail (
+CREATE TABLE order_details (
   order_id INT NOT NULL REFERENCES orders (id),
   product_id INT NOT NULL REFERENCES products (id),
   qty INT,
+  price money,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (order_id, product_id)
 );

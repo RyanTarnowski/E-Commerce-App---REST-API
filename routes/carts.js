@@ -2,7 +2,6 @@ const express = require('express');
 const cartRouter = express.Router();
 const db = require('../db/index');
 
-//user_cart
 const checkUserStatus = (req, res, next) =>{
     if (!req.user) return res.sendStatus(401);
     next();
@@ -84,9 +83,10 @@ cartRouter.post('/checkout', checkUserStatus, async (req, res) => {
     if (orderResult.rowCount > 0) {
         console.log(orderResult.rows);
 
-        const orderDetailResult = await db.query(`INSERT INTO order_detail (order_id, product_id, qty)
-                                                  SELECT $1, product_id, qty
+        const orderDetailResult = await db.query(`INSERT INTO order_details (order_id, product_id, qty, price)
+                                                  SELECT $1, product_id, qty, products.price
                                                   FROM user_cart
+                                                  INNER JOIN products ON user_cart.product_id = products.id
                                                   WHERE user_id = $2
                                                   RETURNING *`, [ orderResult.rows[0].id, req.user.id ]);
 
