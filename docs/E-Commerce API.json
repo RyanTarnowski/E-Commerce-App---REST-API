@@ -1,0 +1,903 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "E-Commerce API",
+    "version": "1.0.0",
+    "description": "A basic E-Commerce API for working with the Swagger tools"
+  },
+  "paths": {
+    "/users/status": {
+      "get": {
+        "summary": "Get the current user's status.",
+        "description": "Get the current user's status.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "user": {
+                    "value": "{\"id\": 1,\"username\": \"TestUser1\"}"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get the current user's account information.",
+        "description": "Get the current user's account information.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "user": {
+                    "value": "[{\"id\": 1, \"username\": \"TestUser1\", \"created_at\": \"2025-09-13T03:45:47.403Z\"}]"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "No user found with id of [id]"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/register": {
+      "post": {
+        "summary": "Register a new user.",
+        "description": "Inserts a new users into the database.",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "A new user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": "User added with ID: 2"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "[Username] already exists"
+                  }
+                }
+              }
+            },
+            "description": "[Username] already exists"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login a user.",
+        "description": "Validates the username and password.",
+        "requestBody": {
+          "description": "Existing user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": "OK"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "Logout a user.",
+        "description": "Logout a user.",
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": "OK"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error1": {
+                    "value": "No user logged in"
+                  },
+                  "Error2": {
+                    "value": "Bad Request"
+                  }
+                }
+              }
+            },
+            "description": "No user logged in"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Get all the products or get all the products by category.",
+        "description": "Get all the products or get all the products by category.",
+        "parameters": [
+          {
+            "in": "query",
+            "required": false,
+            "name": "column name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Column name you want to filter by."
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "value",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Value you want to filter by."
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "user": {
+                    "value": "[{\"id\": 1,\"category_id\": 1,\"name\": \"Product1\",\"description\": \"Desc1\",\"price\": \"$9.99\",\"created_at\": \"2025-09-13T01:43:06.914Z\"},{\"id\": 2,\"category_id\": 1,\"name\": \"Product2\",\"description\": \"Desc2\",\"price\": \"$19.99\",\"created_at\": \"2025-09-13T01:43:06.914Z\"},{\"id\": 3,\"category_id\": 2,\"name\": \"Product3\",\"description\": \"Desc3\",\"price\": \"$92.99\",\"created_at\": \"2025-09-13T01:43:06.914Z\"},{\"id\": 4,\"category_id\": 2,\"name\": \"Product4\",\"description\": \"Desc4\",\"price\": \"$94.99\",\"created_at\": \"2025-09-13T01:43:06.914Z\"}]"
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "No products found"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Get the information about a product by its id.",
+        "description": "Get the information about a product by its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the product.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "user": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "category_id": 1,
+                        "name": "Product1",
+                        "description": "Desc1",
+                        "price": "$9.99",
+                        "created_at": "2025-09-13T01:43:06.914Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "404": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "No product found with id of [id]"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/cart": {
+      "get": {
+        "summary": "Get the current user's cart.",
+        "description": "Get the current user's cart.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "user": {
+                    "value": [
+                      {
+                        "user_id": 1,
+                        "product_id": 2,
+                        "qty": 5,
+                        "created_at": "2025-09-13T20:01:18.168Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "No products in cart"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      },
+      "post": {
+        "summary": "Add product to user's cart.",
+        "description": "Add product to user's cart.",
+        "requestBody": {
+          "description": "Existing product object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": [
+                      {
+                        "user_id": 1,
+                        "product_id": 2,
+                        "qty": 5,
+                        "created_at": "2025-09-13T20:01:18.168Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error1": {
+                    "value": "Invalid request"
+                  },
+                  "Error2": {
+                    "value": "Bad Request"
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      },
+      "put": {
+        "summary": "Update existing product in user's cart.",
+        "description": "Update existing product in user's cart.",
+        "requestBody": {
+          "description": "Existing product object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": [
+                      {
+                        "user_id": 1,
+                        "product_id": 2,
+                        "qty": 666,
+                        "created_at": "2025-09-12T19:58:15.096Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error1": {
+                    "value": "Invalid request"
+                  },
+                  "Error2": {
+                    "value": "Bad Request"
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/cart/{id}": {
+      "delete": {
+        "summary": "Delete existing product in user's cart.",
+        "description": "Delete existing product in user's cart.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the product.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": [
+                      {
+                        "user_id": 1,
+                        "product_id": 2,
+                        "qty": 666,
+                        "created_at": "2025-09-13T20:19:24.987Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success, returns the delete product."
+          },
+          "400": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error1": {
+                    "value": "Invalid request"
+                  },
+                  "Error2": {
+                    "value": "Bad Request"
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/cart/checkout": {
+      "post": {
+        "summary": "Valids user payment info, create order from cart items and clears cart if successful.",
+        "description": "Valids user payment info, create order from cart items and clears cart if successful.",
+        "requestBody": {
+          "description": "User's card information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Card"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Message": {
+                    "value": [
+                      {
+                        "order_id": 3,
+                        "product_id": 2,
+                        "qty": 5,
+                        "price": "$19.99",
+                        "created_at": "2025-09-14T19:33:56.439Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "400": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error1": {
+                    "value": "Invalid payment info"
+                  },
+                  "Error2": {
+                    "value": "There are no items in your cart to checkout"
+                  },
+                  "Error3": {
+                    "value": "Payment was not accepted"
+                  },
+                  "Error4": {
+                    "value": "Bad Request"
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/orders": {
+      "get": {
+        "summary": "Get all orders for the user.",
+        "description": "Get all orders for the user.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "orders": {
+                    "value": [
+                      {
+                        "id": 2,
+                        "user_id": 1,
+                        "status": "Processing",
+                        "created_at": "2025-09-13T03:50:13.338Z",
+                        "items_in_order": "2",
+                        "total": "$289.93"
+                      },
+                      {
+                        "id": 3,
+                        "user_id": 1,
+                        "status": "Processing",
+                        "created_at": "2025-09-14T19:33:56.432Z",
+                        "items_in_order": "1",
+                        "total": "$99.95"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "No orders found"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "tags": [
+          "Orders"
+        ]
+      }
+    },
+    "/orders/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The id of the product.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get orders information by its id.",
+        "description": "Get orders information by its id.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "orders": {
+                    "value": [
+                      {
+                        "id": 2,
+                        "user_id": 1,
+                        "status": "Processing",
+                        "created_at": "2025-09-13T03:50:13.338Z",
+                        "name": "Product2",
+                        "description": "Desc2",
+                        "qty": 5,
+                        "total": "$99.95"
+                      },
+                      {
+                        "id": 2,
+                        "user_id": 1,
+                        "status": "Processing",
+                        "created_at": "2025-09-13T03:50:13.338Z",
+                        "name": "Product4",
+                        "description": "Desc4",
+                        "qty": 2,
+                        "total": "$189.98"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "Unauthorized"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "Error": {
+                    "value": "No orders found with id of [id]"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "tags": [
+          "Orders"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "item_in_order": {
+            "type": "string"
+          },
+          "total": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Order"
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Product"
+        }
+      },
+      "Card": {
+        "type": "object",
+        "properties": {
+          "card_holder": {
+            "type": "string"
+          },
+          "card_number": {
+            "type": "string"
+          },
+          "card_cvv": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Card"
+        }
+      }
+    }
+  }
+}
