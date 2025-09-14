@@ -18,7 +18,7 @@ orderRouter.get('/', checkUserStatus, async (req, res) => {
     if(result.rowCount > 0) {
         res.status(200).send(result.rows);
     } else {
-        res.sendStatus(400);
+        res.status(404).send(`No orders found`)
     }
 });
 
@@ -30,11 +30,11 @@ orderRouter.get('/:orderId', checkUserStatus, async (req, res) => {
                                    INNER JOIN products ON order_details.product_id = products.id
                                    WHERE user_id = $1 AND orders.id = $2
                                    GROUP BY orders.id, orders.user_id, orders.status, orders.created_at, products.name, products.description, order_details.qty;`, [ req.user.id, req.params.orderId ]);
-                                                            
+
     if(result.rowCount > 0) {
         res.status(200).send(result.rows);
     } else {
-        res.sendStatus(400);
+        res.status(404).send(`No orders found with id of ${req.params.orderId}`)
     }
 });
 

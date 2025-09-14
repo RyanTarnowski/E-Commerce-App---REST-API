@@ -15,7 +15,7 @@ productRouter.get('/', async (req, res) => {
     if(result.rowCount > 0) {
         res.status(200).send(result.rows);
     } else {
-        res.sendStatus(400);
+        res.status(404).send(`No products found`)
     }
 });
 
@@ -25,7 +25,7 @@ productRouter.get('/:productId', async (req, res) => {
     if(result.rowCount > 0) {
         res.status(200).send(result.rows);
     } else {
-        res.sendStatus(400);
+        res.status(404).send(`No product found with id of ${req.params.productId}`)
     }
 });
 

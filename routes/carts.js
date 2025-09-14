@@ -13,7 +13,7 @@ cartRouter.get('/', checkUserStatus, async (req, res) => {
     if (result.rowCount > 0) {
         res.status(200).send(result.rows);
     } else {
-        res.sendStatus(400);
+        res.status(404).send(`No products in cart`)
     }
 });
 
@@ -45,12 +45,10 @@ cartRouter.put('/', checkUserStatus, async (req, res) => {
     }
 });
 
-cartRouter.delete('/', checkUserStatus, async (req, res) => {
-    const { product_id } = req.body;
+cartRouter.delete('/:productId', checkUserStatus, async (req, res) => {
+    if (!req.params.productId) return res.status(400).send("Invalid request");
 
-    if (!product_id) return res.status(400).send("Invalid request");
-
-    const result = await db.query('DELETE FROM user_cart WHERE user_id = $1 AND product_id = $2 RETURNING *', [req.user.id, product_id]);
+    const result = await db.query('DELETE FROM user_cart WHERE user_id = $1 AND product_id = $2 RETURNING *', [req.user.id, req.params.productId]);
 
     if (result.rowCount > 0) {
         res.status(200).send(result.rows);
