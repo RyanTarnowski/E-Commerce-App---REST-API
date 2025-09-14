@@ -1,4 +1,4 @@
---CREATE DATABASE e_commerce;
+CREATE DATABASE e_commerce;
 
 -- DROP TABLE user_cart;
 -- DROP TABLE order_detail;
@@ -18,11 +18,6 @@ CREATE TABLE users (
 
 CREATE UNIQUE INDEX idx_lower_unique 
    ON users (lower(username));
-   
--- ALTER TABLE users
---   ADD CONSTRAINT users_username_lowercase_ck
---   CHECK (username = lower(username));
-
 
 CREATE TABLE orders (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
