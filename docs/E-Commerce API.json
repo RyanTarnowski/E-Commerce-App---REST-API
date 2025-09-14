@@ -178,8 +178,11 @@
             "content": {
               "text/plain; charset=utf-8": {
                 "examples": {
-                  "Error": {
+                  "Error1": {
                     "value": "Unauthorized"
+                  },
+                  "Error2": {
+                    "value": "Incorrect username or password"
                   }
                 }
               }

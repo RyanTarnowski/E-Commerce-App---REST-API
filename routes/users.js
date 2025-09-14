@@ -32,8 +32,18 @@ userRouter.get('/:userId', checkUserStatus, async (req, res) => {
 
 userRouter.post('/register', db.createUser);
 
-userRouter.post('/login', passport.authenticate('local'), (req, res) => {
-  res.sendStatus(200);
+userRouter.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { 
+      return res.status(401).send(err.message)
+    }
+
+    req.logIn(user, function(err) {
+      if (err) { return res.status(401).send('Incorrect username or password'); }
+
+      return res.sendStatus(200);
+    });
+  })(req, res, next);
 });
 
 userRouter.post('/logout', (req, res) => {
@@ -46,44 +56,5 @@ userRouter.post('/logout', (req, res) => {
 });
 
 userRouter.put('/:userId', checkUserStatus, db.updateUserPW);
-
-
-
-// userRouter.post('/login', function(req, res, next) {
-//   passport.authenticate('local', function(err, user, info) {
-//     if (err) { 
-//       console.log('inside error');
-//       console.log(err);
-    
-//       return res.status(401).send(err.message)
-//     }
-
-//     return res.sendStatus(200);
-
-//     // if (!user) {
-//     //   // *** Display message using Express 3 locals
-//     //   req.session.message = info.message;
-
-//     //   res.sendStatus(401);
-//     //   //return res.redirect('login');
-//     // }
-//     // req.logIn(user, function(err) {
-//     //   if (err) { return next(err); }
-
-//     //   res.sendStatus(200);
-//     //   //return res.redirect('/users/' + user.username);
-//     // });
-//   })(req, res, next);
-// });
-
-
-
-// app.get('/protected', function(req, res, next) {
-//   passport.authenticate('local', function(err, user, info, status) {
-//     if (err) { return next(err) }
-//     if (!user) { return res.redirect('/signin') }
-//     res.redirect('/account');
-//   })(req, res, next);
-// });
 
 module.exports = userRouter;
