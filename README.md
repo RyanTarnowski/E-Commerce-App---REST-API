@@ -3,7 +3,7 @@
 
 ## About The Project
 
-The goal of this project was to build a basic e-commerce REST api and document the api with swagger.
+The goal of this project was to build a basic e-commerce REST API and document the API with swagger.
 
 ### Built With
 
@@ -32,13 +32,13 @@ To get a local copy up and running follow these steps.
    ```sh
    git clone https://github.com/RyanTarnowski/E-Commerce-App---REST-API.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Open the scripts directory and run the "Create Table.sql" file on your Postgres server
-5. Open the scripts directory and run the "Test Data.sql" file on your Postgres server
-6. Create a config.env file within the root directory and add the following
+3. Open the scripts directory and run the "Create Table.sql" file on your Postgres server
+4. Open the scripts directory and run the "Test Data.sql" file on your Postgres server
+5. Create a config.env file within the root directory and add the following
    ```
     PGUSER=[Postgres UserName]
     PGPASSWORD=[Postgres Password]
@@ -48,7 +48,8 @@ To get a local copy up and running follow these steps.
     SESSIONSECRET=[Session Secret (something random)] 
     PORT=[Port number to run the app on (3000)]
    ```
-7. Run the application
+6. Run the application
    ```sh
    node server.js
    ```
+7. From a browser navigate to http://localhost:3000/api/docs/#/ to review the routes provided by the API and how to use them

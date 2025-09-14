@@ -6,7 +6,7 @@
     "description": "A basic E-Commerce API for working with the Swagger tools"
   },
   "paths": {
-    "/users/status": {
+    "/api/users/status": {
       "get": {
         "summary": "Get the current user's status.",
         "description": "Get the current user's status.",
@@ -41,7 +41,7 @@
         ]
       }
     },
-    "/users/{id}": {
+    "/api/users/{id}": {
       "get": {
         "summary": "Get the current user's account information.",
         "description": "Get the current user's account information.",
@@ -99,7 +99,7 @@
         ]
       }
     },
-    "/users/register": {
+    "/api/users/register": {
       "post": {
         "summary": "Register a new user.",
         "description": "Inserts a new users into the database.",
@@ -146,7 +146,7 @@
         ]
       }
     },
-    "/users/login": {
+    "/api/users/login": {
       "post": {
         "summary": "Login a user.",
         "description": "Validates the username and password.",
@@ -195,7 +195,7 @@
         ]
       }
     },
-    "/users/logout": {
+    "/api/users/logout": {
       "post": {
         "summary": "Logout a user.",
         "description": "Logout a user.",
@@ -233,7 +233,7 @@
         ]
       }
     },
-    "/products": {
+    "/api/products": {
       "get": {
         "summary": "Get all the products or get all the products by category.",
         "description": "Get all the products or get all the products by category.",
@@ -288,7 +288,7 @@
         ]
       }
     },
-    "/products/{id}": {
+    "/api/products/{id}": {
       "get": {
         "summary": "Get the information about a product by its id.",
         "description": "Get the information about a product by its id.",
@@ -343,7 +343,7 @@
         ]
       }
     },
-    "/cart": {
+    "/api/cart": {
       "get": {
         "summary": "Get the current user's cart.",
         "description": "Get the current user's cart.",
@@ -529,7 +529,7 @@
         ]
       }
     },
-    "/cart/{id}": {
+    "/api/cart/{id}": {
       "delete": {
         "summary": "Delete existing product in user's cart.",
         "description": "Delete existing product in user's cart.",
@@ -597,7 +597,7 @@
         ]
       }
     },
-    "/cart/checkout": {
+    "/api/cart/checkout": {
       "post": {
         "summary": "Valids user payment info, create order from cart items and clears cart if successful.",
         "description": "Valids user payment info, create order from cart items and clears cart if successful.",
@@ -672,7 +672,7 @@
         ]
       }
     },
-    "/orders": {
+    "/api/orders": {
       "get": {
         "summary": "Get all orders for the user.",
         "description": "Get all orders for the user.",
@@ -736,7 +736,7 @@
         ]
       }
     },
-    "/orders/{id}": {
+    "/api/orders/{id}": {
       "parameters": [
         {
           "name": "id",
