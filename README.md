@@ -23,7 +23,9 @@ To get a local copy up and running follow these steps.
   npm install npm@latest -g
   ```
 * Postgres SQL
+    https://www.postgresql.org/download/
 * Node JS
+    https://nodejs.org/en/download/current
 
 
 ### Installation
