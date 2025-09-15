@@ -38,9 +38,13 @@ To get a local copy up and running follow these steps.
    ```sh
    npm install
    ```
-3. Open the scripts directory and run the "Create Table.sql" file on your Postgres server
-4. Open the scripts directory and run the "Test Data.sql" file on your Postgres server
-5. Create a config.env file within the root directory and add the following
+3. Open E-Commerce App - REST API/db/scripts/Create Database.sql file on your Postgres server and run the file
+
+4. Open E-Commerce App - REST API/db/scripts/Create Table.sql file on your Postgres server connected to the e_commerce database and run the file
+
+5. Open E-Commerce App - REST API/db/scripts/Test Data.sql file on your Postgres server connected to the e_commerce database and run the file
+
+6. Create a config.env file within the root directory and add the following
    ```
     PGUSER=[Postgres UserName]
     PGPASSWORD=[Postgres Password]
@@ -50,8 +54,8 @@ To get a local copy up and running follow these steps.
     SESSIONSECRET=[Session Secret (something random)] 
     PORT=[Port number to run the app on (3000)]
    ```
-6. Run the application
+7. Run the application
    ```sh
    node server.js
    ```
-7. From a browser navigate to http://localhost:3000/api/docs/#/ to review the routes provided by the API and how to use them
+8. From a browser navigate to http://localhost:3000/api/docs/#/ to review the routes provided by the API and how to use them

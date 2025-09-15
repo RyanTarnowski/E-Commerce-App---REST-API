@@ -404,7 +404,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Product"
+                "type": "object",
+                "required": [
+                  "product_id",
+                  "qty"
+                ],
+                "properties": {
+                  "product_id": {
+                    "type": "string",
+                    "description": "Id of the product"
+                  },
+                  "qty": {
+                    "type": "string",
+                    "description": "Qty to add"
+                  }
+                }
               }
             }
           },
@@ -470,7 +484,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Product"
+                "type": "object",
+                "required": [
+                  "product_id",
+                  "qty"
+                ],
+                "properties": {
+                  "product_id": {
+                    "type": "string",
+                    "description": "Id of the product"
+                  },
+                  "qty": {
+                    "type": "string",
+                    "description": "Qty to update to"
+                  }
+                }
               }
             }
           },

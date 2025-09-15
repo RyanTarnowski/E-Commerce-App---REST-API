@@ -1,4 +1,3 @@
-CREATE DATABASE e_commerce;
 
 -- DROP TABLE user_cart;
 -- DROP TABLE order_detail;
